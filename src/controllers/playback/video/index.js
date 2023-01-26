@@ -1053,6 +1053,14 @@ import { setBackdropTransparency, TRANSPARENCY_LEVEL } from '../../../components
             }
         }
 
+        function onMouseWheel(e) {
+            if (e.deltaY < 0) {
+                playbackManager.volumeUp(currentPlayer);
+            } else {
+                playbackManager.volumeDown(currentPlayer);
+            }
+        }
+
         function onKeyDown(e) {
             clickedElement = e.target;
 
@@ -1344,6 +1352,7 @@ import { setBackdropTransparency, TRANSPARENCY_LEVEL } from '../../../components
                 });
                 showOsd();
                 inputManager.on(window, onInputCommand);
+                document.addEventListener('wheel', onMouseWheel);
                 document.addEventListener('keydown', onKeyDown);
                 dom.addEventListener(document, 'keydown', onKeyDownCapture, {
                     capture: true,
@@ -1385,6 +1394,7 @@ import { setBackdropTransparency, TRANSPARENCY_LEVEL } from '../../../components
                 statsOverlay.enabled(false);
             }
 
+            document.removeEventListener('wheel', onMouseWheel);
             document.removeEventListener('keydown', onKeyDown);
             dom.removeEventListener(document, 'keydown', onKeyDownCapture, {
                 capture: true,
